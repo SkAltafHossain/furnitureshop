@@ -4,6 +4,7 @@ import com.example.localshop.feature.category.domain.model.Category
 import com.example.localshop.feature.product.domain.model.Product
 
 data class HomeData(
+    val banners: List<Banner>,
     val products: List<Product>,
     val categories: List<Category>,
     val latestProducts: List<Product>,

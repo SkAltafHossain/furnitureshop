@@ -7,15 +7,18 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class HomeApiResponseDto(
+    @SerialName("banners")
+    val banners: List<BannerDto> = emptyList(),
+
     @SerialName("products")
-    val products: List<ProductDto>,
-    
+    val products: List<ProductDto> = emptyList(),
+
     @SerialName("categories")
-    val categories: List<CategoryDto>,
-    
+    val categories: List<CategoryDto> = emptyList(),
+
     @SerialName("latest_products")
-    val latestProducts: List<ProductDto>,
-    
+    val latestProducts: List<ProductDto> = emptyList(),
+
     @SerialName("featured_products")
-    val featuredProducts: List<ProductDto>
+    val featuredProducts: List<ProductDto> = emptyList()
 )

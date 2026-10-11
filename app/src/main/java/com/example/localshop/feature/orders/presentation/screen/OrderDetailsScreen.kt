@@ -23,20 +23,13 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import com.example.localshop.core.designsystem.component.AppButton
 import com.example.localshop.core.designsystem.component.AppOutlinedButton
 import androidx.compose.runtime.Composable
@@ -170,69 +163,42 @@ fun OrderDetailsScreen(
         }
     }
 
-    @OptIn(ExperimentalMaterial3Api::class)
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(colors.pageBackground)
+            .padding(top = 16.dp)
+    ) {
+        when {
+            isLoading && order == null -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(color = colors.primary)
+                }
+            }
+            order == null -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
                     Text(
-                        text = "Order Details",
-                        color = Color.White,
-                        fontWeight = FontWeight.Bold
+                        text = "Order not found",
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = colors.secondaryText
                     )
-                },
-                navigationIcon = {
-                    IconButton(onClick = { navController.navigateUp() }) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "Back",
-                            tint = Color.White
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = colors.primary
+                }
+            }
+            else -> {
+                val currentOrder = order!!
+                OrderDetailsContent(
+                    order = currentOrder,
+                    colors = colors,
+                    modifier = Modifier.fillMaxSize(),
+                    isDownloadingBill = isDownloadingBill,
+                    onDownloadBill = { viewModel.downloadBill(currentOrder.id) }
                 )
-            )
-        }
-    ) { paddingValues ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(colors.pageBackground)
-                .padding(paddingValues)
-        ) {
-            when {
-                isLoading && order == null -> {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        CircularProgressIndicator(color = colors.primary)
-                    }
-                }
-                order == null -> {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = "Order not found",
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = colors.secondaryText
-                        )
-                    }
-                }
-                else -> {
-                    val currentOrder = order!!
-                    OrderDetailsContent(
-                        order = currentOrder,
-                        colors = colors,
-                        modifier = Modifier.fillMaxSize(),
-                        isDownloadingBill = isDownloadingBill,
-                        onDownloadBill = { viewModel.downloadBill(currentOrder.id) }
-                    )
-                }
             }
         }
     }

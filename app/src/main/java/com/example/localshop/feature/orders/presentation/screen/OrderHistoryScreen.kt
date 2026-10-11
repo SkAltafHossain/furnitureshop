@@ -171,33 +171,6 @@ fun OrderHistoryScreen(
             .fillMaxSize()
             .background(colors.pageBackground)
     ) {
-        Column(
-            modifier = Modifier.fillMaxSize()
-        ) {
-        // Header
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(colors.primary)
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = "My Orders",
-                style = MaterialTheme.typography.titleLarge,
-                color = androidx.compose.ui.graphics.Color.White,
-                fontWeight = FontWeight.Bold
-            )
-            IconButton(onClick = { viewModel.loadOrders() }) {
-                Icon(
-                    imageVector = Icons.Default.Refresh,
-                    contentDescription = "Refresh",
-                    tint = androidx.compose.ui.graphics.Color.White
-                )
-            }
-        }
-
         when {
             isLoading && orders.isEmpty() -> {
                 Box(
@@ -239,7 +212,12 @@ fun OrderHistoryScreen(
             else -> {
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
-                    contentPadding = androidx.compose.foundation.layout.PaddingValues(16.dp),
+                    contentPadding = androidx.compose.foundation.layout.PaddingValues(
+                        start = 16.dp,
+                        top = 16.dp,
+                        end = 16.dp,
+                        bottom = 16.dp
+                    ),
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     items(orders) { order ->
@@ -261,7 +239,6 @@ fun OrderHistoryScreen(
                     }
                 }
             }
-        }
         }
     }
 

@@ -145,6 +145,7 @@ class HomeViewModel @Inject constructor(
                 when (result) {
                     is ResultState.Success -> {
                         _uiState.value = _uiState.value.copy(
+                            banners = result.data.banners,
                             products = result.data.products,
                             categories = result.data.categories,
                             latestProducts = result.data.latestProducts,
