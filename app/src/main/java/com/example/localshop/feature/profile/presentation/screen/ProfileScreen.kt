@@ -348,7 +348,8 @@ private fun LoggedInProfileScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(colors.primary)
-                .padding(16.dp, 24.dp)
+                .padding(16.dp, 24.dp),
+            contentAlignment = Alignment.Center
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -390,11 +391,23 @@ private fun LoggedInProfileScreen(
                 Spacer(modifier = Modifier.height(4.dp))
 
                 // User Email/Phone
-                Text(
-                    text = user?.email ?: user?.phone ?: "",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.White.copy(alpha = 0.9f)
-                )
+                if (!user?.email.isNullOrEmpty()) {
+                    Text(
+                        text = user?.email ?: "",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color.White,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                } else if (!user?.phone.isNullOrEmpty()) {
+                    Text(
+                        text = user?.phone ?: "",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color.White,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
             }
         }
 
@@ -457,11 +470,6 @@ private fun LoggedInProfileScreen(
                     icon = Icons.Default.LocationOn,
                     label = "Manage Addresses",
                     onClick = { navController.navigate(Screen.AddressManagement.route) }
-                ),
-                ProfileMenuItem(
-                    icon = Icons.Default.Help,
-                    label = "Help & Support",
-                    onClick = { /* TODO: Navigate to help */ }
                 ),
                 ProfileMenuItem(
                     icon = Icons.Default.Logout,

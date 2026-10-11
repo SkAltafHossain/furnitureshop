@@ -149,22 +149,6 @@ fun CheckoutScreen(
                             .fillMaxSize()
                             .verticalScroll(rememberScrollState())
                     ) {
-                        // Header
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp, vertical = 8.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = if (uiState.isBuyNowMode) "Buy Now" else "Checkout",
-                                style = MaterialTheme.typography.headlineSmall,
-                                color = colors.primaryText,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
-
                         Spacer(modifier = Modifier.height(8.dp))
 
                         // Address Section

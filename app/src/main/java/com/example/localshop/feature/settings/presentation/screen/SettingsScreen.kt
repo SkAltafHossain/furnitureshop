@@ -57,15 +57,6 @@ fun SettingsScreen(
             .background(colors.pageBackground)
             .padding(16.dp)
     ) {
-        // Header
-        Text(
-            text = "Settings",
-            style = MaterialTheme.typography.headlineMedium,
-            color = colors.primaryText,
-            fontWeight = FontWeight.Bold
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))
 
         Column(
             modifier = Modifier
