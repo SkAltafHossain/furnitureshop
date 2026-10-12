@@ -53,13 +53,6 @@ fun CategoriesScreen(
                     .background(colors.pageBackground)
                     .padding(16.dp)
             ) {
-                Text(
-                    text = "Categories",
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = colors.primaryText,
-                    modifier = Modifier.padding(bottom = 16.dp)
-                )
-                
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(3),
                     contentPadding = PaddingValues(8.dp),

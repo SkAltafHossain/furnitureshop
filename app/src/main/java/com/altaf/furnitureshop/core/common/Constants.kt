@@ -1,10 +1,10 @@
 package com.altaf.furnitureshop.core.common
 
 object Constants {
-    const val BASE_URL = "https://petshop.altaffreelancer.com/api/"
-    const val WEB_BASE_URL = "https://petshop.altaffreelancer.com/"
-    const val IMAGE_BASE_URL = "https://petshop.altaffreelancer.com/storage/"
-    const val PREF_NAME = "localshop_prefs"
+    const val BASE_URL = "https://furnitureshop.altaffreelancer.com/api/"
+    const val WEB_BASE_URL = "https://furnitureshop.altaffreelancer.com/"
+    const val IMAGE_BASE_URL = "https://furnitureshop.altaffreelancer.com/storage/"
+    const val PREF_NAME = "furnitureshop_prefs"
     const val KEY_AUTH_TOKEN = "auth_token"
     const val KEY_USER_ID = "user_id"
     const val KEY_USER_NAME = "user_name"
