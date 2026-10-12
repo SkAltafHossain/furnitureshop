@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.localshop"
+    namespace = "com.altaf.furnitureshop"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.localshop"
+        applicationId = "com.altaf.furnitureshop"
         minSdk = 24
         targetSdk = 36
         versionCode = 1

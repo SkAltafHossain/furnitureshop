@@ -1,0 +1,44 @@
+package com.altaf.furnitureshop.feature.product.data.remote
+
+import com.altaf.furnitureshop.core.network.ApiResponse
+import com.altaf.furnitureshop.core.network.PaginatedResponse
+import com.altaf.furnitureshop.feature.product.data.remote.dto.ProductDto
+import com.altaf.furnitureshop.feature.product.data.remote.dto.ProductDetailsDto
+import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Query
+
+interface ProductApi {
+    @GET("products")
+    suspend fun getProducts(
+        @Query("category") category: String? = null,
+        @Query("min_price") minPrice: Double? = null,
+        @Query("max_price") maxPrice: Double? = null,
+        @Query("search") search: String? = null,
+        @Query("sort") sort: String? = null,
+        @Query("page") page: Int = 1,
+        @Query("perpage") perPage: Int = 12
+    ): PaginatedResponse<ProductDto>
+    
+    @GET("products/{id}")
+    suspend fun getProductDetails(@Path("id") productId: Int): ApiResponse<ProductDto>
+    
+    @GET("products/{id}")
+    suspend fun getProductWithRelated(@Path("id") productId: Int): ApiResponse<ProductDetailsDto>
+    
+    @GET("products/search")
+    suspend fun searchProducts(
+        @Query("query") query: String,
+        @Query("per_page") perPage: Int = 12
+    ): PaginatedResponse<ProductDto>
+    
+    @GET("products/featured")
+    suspend fun getFeaturedProducts(
+        @Query("per_page") perPage: Int = 12
+    ): PaginatedResponse<ProductDto>
+    
+    @GET("products/latest")
+    suspend fun getLatestProducts(
+        @Query("per_page") perPage: Int = 12
+    ): PaginatedResponse<ProductDto>
+}

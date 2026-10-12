@@ -1,0 +1,160 @@
+package com.altaf.furnitureshop.feature.product.data.repository
+
+import com.altaf.furnitureshop.core.error.ErrorMapper
+import com.altaf.furnitureshop.core.result.PagedResult
+import com.altaf.furnitureshop.core.result.ResultState
+import com.altaf.furnitureshop.feature.product.data.mapper.ProductDetailsMapper
+import com.altaf.furnitureshop.feature.product.data.mapper.ProductMapper
+import com.altaf.furnitureshop.feature.product.data.remote.ProductApi
+import com.altaf.furnitureshop.feature.product.domain.model.Product
+import com.altaf.furnitureshop.feature.product.domain.model.ProductDetails
+import com.altaf.furnitureshop.feature.product.domain.model.ProductFilters
+import com.altaf.furnitureshop.feature.product.domain.repository.ProductRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
+
+class ProductRepositoryImpl @Inject constructor(
+    private val productApi: ProductApi
+) : ProductRepository {
+    
+    override fun getProducts(filters: ProductFilters): Flow<ResultState<PagedResult<Product>>> = flow {
+        emit(ResultState.Loading)
+        try {
+            val response = productApi.getProducts(
+                category = filters.categorySlug,
+                minPrice = filters.minPrice,
+                maxPrice = filters.maxPrice,
+                search = filters.search,
+                sort = filters.sort,
+                page = filters.page,
+                perPage = filters.perPage
+            )
+            if (response.success) {
+                val products = ProductMapper.mapToDomainList(response.data)
+                val pagedResult = PagedResult(
+                    items = products,
+                    currentPage = response.pagination.currentPage,
+                    lastPage = response.pagination.lastPage,
+                    total = response.pagination.total,
+                    perPage = response.pagination.perPage,
+                    from = response.pagination.from,
+                    to = response.pagination.to
+                )
+                emit(ResultState.Success(pagedResult))
+            } else {
+                emit(ResultState.Error(response.message ?: "Operation failed"))
+            }
+        } catch (e: Exception) {
+            val appError = ErrorMapper.mapToAppError(e)
+            emit(ResultState.Error(appError.localizedMessage ?: appError.toString(), appError))
+        }
+    }
+    
+    override fun getProductDetails(productId: Int): Flow<ResultState<Product>> = flow {
+        emit(ResultState.Loading)
+        try {
+            val response = productApi.getProductDetails(productId)
+            if (response.success && response.data != null) {
+                val product = ProductMapper.mapToDomain(response.data)
+                emit(ResultState.Success(product))
+            } else {
+                emit(ResultState.Error(response.message ?: "Operation failed"))
+            }
+        } catch (e: Exception) {
+            val appError = ErrorMapper.mapToAppError(e)
+            emit(ResultState.Error(appError.localizedMessage ?: appError.toString(), appError))
+        }
+    }
+    
+    override fun getProductWithRelated(productId: Int): Flow<ResultState<ProductDetails>> = flow {
+        emit(ResultState.Loading)
+        try {
+            val response = productApi.getProductWithRelated(productId)
+            if (response.success && response.data != null) {
+                val productDetails = ProductDetailsMapper.mapToDomain(response.data)
+                emit(ResultState.Success(productDetails))
+            } else {
+                emit(ResultState.Error(response.message ?: "Operation failed"))
+            }
+        } catch (e: Exception) {
+            val appError = ErrorMapper.mapToAppError(e)
+            emit(ResultState.Error(appError.localizedMessage ?: appError.toString(), appError))
+        }
+    }
+    
+    override fun searchProducts(query: String, perPage: Int): Flow<ResultState<PagedResult<Product>>> = flow {
+        emit(ResultState.Loading)
+        try {
+            val response = productApi.searchProducts(query, perPage)
+            if (response.success) {
+                val products = ProductMapper.mapToDomainList(response.data)
+                val pagedResult = PagedResult(
+                    items = products,
+                    currentPage = response.pagination.currentPage,
+                    lastPage = response.pagination.lastPage,
+                    total = response.pagination.total,
+                    perPage = response.pagination.perPage,
+                    from = response.pagination.from,
+                    to = response.pagination.to
+                )
+                emit(ResultState.Success(pagedResult))
+            } else {
+                emit(ResultState.Error(response.message ?: "Operation failed"))
+            }
+        } catch (e: Exception) {
+            val appError = ErrorMapper.mapToAppError(e)
+            emit(ResultState.Error(appError.localizedMessage ?: appError.toString(), appError))
+        }
+    }
+    
+    override fun getFeaturedProducts(perPage: Int): Flow<ResultState<PagedResult<Product>>> = flow {
+        emit(ResultState.Loading)
+        try {
+            val response = productApi.getFeaturedProducts(perPage)
+            if (response.success) {
+                val products = ProductMapper.mapToDomainList(response.data)
+                val pagedResult = PagedResult(
+                    items = products,
+                    currentPage = response.pagination.currentPage,
+                    lastPage = response.pagination.lastPage,
+                    total = response.pagination.total,
+                    perPage = response.pagination.perPage,
+                    from = response.pagination.from,
+                    to = response.pagination.to
+                )
+                emit(ResultState.Success(pagedResult))
+            } else {
+                emit(ResultState.Error(response.message ?: "Operation failed"))
+            }
+        } catch (e: Exception) {
+            val appError = ErrorMapper.mapToAppError(e)
+            emit(ResultState.Error(appError.localizedMessage ?: appError.toString(), appError))
+        }
+    }
+    
+    override fun getLatestProducts(perPage: Int): Flow<ResultState<PagedResult<Product>>> = flow {
+        emit(ResultState.Loading)
+        try {
+            val response = productApi.getLatestProducts(perPage)
+            if (response.success) {
+                val products = ProductMapper.mapToDomainList(response.data)
+                val pagedResult = PagedResult(
+                    items = products,
+                    currentPage = response.pagination.currentPage,
+                    lastPage = response.pagination.lastPage,
+                    total = response.pagination.total,
+                    perPage = response.pagination.perPage,
+                    from = response.pagination.from,
+                    to = response.pagination.to
+                )
+                emit(ResultState.Success(pagedResult))
+            } else {
+                emit(ResultState.Error(response.message ?: "Operation failed"))
+            }
+        } catch (e: Exception) {
+            val appError = ErrorMapper.mapToAppError(e)
+            emit(ResultState.Error(appError.localizedMessage ?: appError.toString(), appError))
+        }
+    }
+}

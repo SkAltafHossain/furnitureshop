@@ -1,0 +1,31 @@
+package com.altaf.furnitureshop.feature.auth.data.mapper
+
+import com.altaf.furnitureshop.feature.auth.data.remote.dto.AuthResponseDto
+import com.altaf.furnitureshop.feature.auth.data.remote.dto.UserDto
+import com.altaf.furnitureshop.feature.auth.domain.model.AuthResponse
+import com.altaf.furnitureshop.feature.auth.domain.model.User
+
+object AuthMapper {
+    fun mapToDomain(dto: UserDto): User {
+        return User(
+            id = dto.id,
+            name = dto.name,
+            email = dto.email,
+            emailVerifiedAt = dto.emailVerifiedAt,
+            phone = dto.phone,
+            status = dto.status,
+            isAdmin = dto.isAdmin ?: 0,
+            avatar = dto.avatar,
+            createdAt = dto.createdAt,
+            updatedAt = dto.updatedAt
+        )
+    }
+    
+    fun mapToDomain(dto: AuthResponseDto): AuthResponse {
+        return AuthResponse(
+            token = dto.token,
+            tokenType = dto.tokenType,
+            user = mapToDomain(dto.user)
+        )
+    }
+}

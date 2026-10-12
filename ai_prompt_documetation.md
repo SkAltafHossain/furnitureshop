@@ -32,7 +32,7 @@ Do not invent backend fields, request parameters, response properties, or endpoi
 Create a new Android Studio project with the following configuration:
 
 * Project name: `LocalShop`
-* Application ID: `com.example.localshop` (make configurable)
+* Application ID: `com.altaf.furnitureshop` (make configurable)
 * Language: Kotlin
 * UI: Jetpack Compose
 * Minimum SDK: choose a suitable minimum supported Android version

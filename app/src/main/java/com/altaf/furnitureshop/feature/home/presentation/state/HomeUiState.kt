@@ -1,0 +1,25 @@
+package com.altaf.furnitureshop.feature.home.presentation.state
+
+import com.altaf.furnitureshop.feature.category.domain.model.Category
+import com.altaf.furnitureshop.feature.home.domain.model.Banner
+import com.altaf.furnitureshop.feature.home.domain.model.ShopInfo
+import com.altaf.furnitureshop.feature.home.domain.model.ShopSettings
+import com.altaf.furnitureshop.feature.product.domain.model.Product
+
+data class HomeUiState(
+    val isLoading: Boolean = false,
+    val shopSettings: ShopSettings? = null,
+    val shopInfo: ShopInfo? = null,
+    val banners: List<Banner> = emptyList(),
+    val products: List<Product> = emptyList(),
+    val categories: List<Category> = emptyList(),
+    val latestProducts: List<Product> = emptyList(),
+    val featuredProducts: List<Product> = emptyList(),
+    val errorMessage: String? = null,
+    val isAddingToCart: Boolean = false,
+    val addToCartSuccess: Boolean = false,
+    val addToCartMessage: String? = null,
+    val cartProductIds: Set<Int> = emptySet(),
+    val wishlistProductIds: Set<Int> = emptySet(),
+    val wishlistItems: Map<Int, Int> = emptyMap() // productId to wishlistItemId
+)

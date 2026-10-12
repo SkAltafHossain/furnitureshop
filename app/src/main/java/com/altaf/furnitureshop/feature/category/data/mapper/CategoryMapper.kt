@@ -1,0 +1,38 @@
+package com.altaf.furnitureshop.feature.category.data.mapper
+
+import com.altaf.furnitureshop.core.common.Constants
+import com.altaf.furnitureshop.feature.category.data.remote.dto.CategoryDto
+import com.altaf.furnitureshop.feature.category.domain.model.Category
+
+object CategoryMapper {
+    fun mapToDomain(dto: CategoryDto): Category {
+        val fullImageUrl = if (!dto.imageUrl.isNullOrBlank()) {
+            // Check if it's already a full URL
+            if (dto.imageUrl.startsWith("http://") || dto.imageUrl.startsWith("https://")) {
+                dto.imageUrl
+            } else {
+                "${Constants.IMAGE_BASE_URL}${dto.imageUrl}"
+            }
+        } else {
+            null
+        }
+
+        return Category(
+            id = dto.id,
+            name = dto.name,
+            slug = dto.slug,
+            description = dto.description,
+            imageUrl = fullImageUrl,
+            parentId = dto.parentId,
+            parentName = dto.parentName,
+            productsCount = dto.productsCount,
+            status = dto.status,
+            createdAt = dto.createdAt,
+            updatedAt = dto.updatedAt
+        )
+    }
+
+    fun mapToDomainList(dtos: List<CategoryDto>): List<Category> {
+        return dtos.map { mapToDomain(it) }
+    }
+}
